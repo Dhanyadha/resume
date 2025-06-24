@@ -1,0 +1,37 @@
+.container {
+  .headerTitle {
+    margin: 1rem 0rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .eduBody {
+    width: 100%;
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      margin: 0.5rem;
+      border-radius: 0.3rem;
+      outline: none;
+      border: 1px solid #ccc;
+    }
+
+    textarea {
+      padding: 0.5rem;
+      width: 100%;
+      margin: 0.5rem;
+      border-radius: 0.3rem;
+      outline: none;
+      border: 1px solid #ccc;
+      height: 8rem;
+      resize: none;
+    }
+  }
+
+  .collapseHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5rem;
+  }
+}
