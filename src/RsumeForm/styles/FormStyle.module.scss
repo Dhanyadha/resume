@@ -1,6 +1,19 @@
-.container {
-  height: calc(100% - 2px);
-  overflow-y: scroll;
-  border-right: 1px solid #ccc;
-  padding: 1rem;
+.resumeForm {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #333;
+  }
+
+  input, textarea {
+    &:focus {
+      outline: none;
+      border-color: #4a90e2 !important;
+    }
+  }
 }

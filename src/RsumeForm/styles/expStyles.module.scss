@@ -1,0 +1,41 @@
+.experienceBody {
+  width: 100%;
+}
+
+.collapseHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;   
+  gap: 5rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.inputRow {
+  width: 100%;
+  
+  input, textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    font-size: 14px;
+    
+    
+    &:focus {
+      outline: none;
+      border-color: #1890ff;
+    }
+  }
+  
+  textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+}

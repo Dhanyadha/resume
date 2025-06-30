@@ -1,14 +1,14 @@
 import React from "react";
 import eduStyles from "../styles/eduStyles.module.scss";
-import { Button, Collapse } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import {addEducationLevel,updateEducationLevel,removeEducationLevel,} from "../../redux/slices/educationsDetailsSlice";
+import { addEducationDetails } from '../../redux/slices/educationsDetailsSlice';
+import { DeleteOutlined } from "@ant-design/icons";
+import { Collapse, Button } from "antd";
 
 const EduTitles = [
   "10th / Secondary Education",
   "12th / Diploma",
-  "Degree / B.Tech",
+  "Degree / B.Tech", 
   "P.G",
 ];
 
@@ -16,8 +16,36 @@ const EducationDetails = () => {
   const dispatch = useDispatch();
   const educationLevels = useSelector((state) => state.educationDetails.educationLevels);
 
-  const handleInputChange = (index, name, value) => {
-    dispatch(updateEducationLevel({ index, name, value }));
+  const handleAddEducation = () => {
+    if (educationLevels.length >= EduTitles.length) return;
+    
+    const newEducation = {
+      id: Date.now(),
+      type: "",
+      board: "",
+      institution: "",
+      hallticket: "",
+      startDate: "",
+      endDate: "",
+      yearOfPass: "",
+      grade: "",
+      city: "",
+      stream: "",
+      description: ""
+    };
+    dispatch(addEducationDetails([...educationLevels, newEducation]));
+  };
+
+  const handleRemoveEducation = (index) => {
+    if (educationLevels.length === 1) return;
+    const updated = educationLevels.filter((_, i) => i !== index);
+    dispatch(addEducationDetails(updated));
+  };
+
+  const handleInputChange = (index, field, value) => {
+    const updated = [...educationLevels];
+    updated[index] = { ...updated[index], [field]: value };
+    dispatch(addEducationDetails(updated));
   };
 
   return (
@@ -25,142 +53,131 @@ const EducationDetails = () => {
       <div className={eduStyles.headerTitle}>Education Details</div>
 
       <div className={eduStyles.eduBody}>
-        {educationLevels?.map((eachLevel, index) => {
-          return (
-            <Collapse
-              key={eachLevel.id}
-              collapsible="header"
-              items={[
-                {
-                  key: index,
-                  label: (
-                    <div className={eduStyles.collapseHead}>
-                      <div>{EduTitles[index] || "Additional Education"}</div>
-                      {index === educationLevels?.length - 1 && (
-                        <div
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            dispatch(removeEducationLevel(index));
-                          }}
-                        >
-                          <DeleteOutlined />
-                        </div>
-                      )}
-                    </div>
-                  ),
-                  children: (
-                    <div>
+        {educationLevels.map((edu, index) => (
+          <Collapse
+            key={edu.id}
+            collapsible="header"
+            items={[
+              {
+                key: index,
+                label: (
+                  <div className={eduStyles.collapseHead}>
+                    <div>{EduTitles[index]}</div>
+                    {index === educationLevels.length - 1 && (
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleRemoveEducation(index);
+                        }}
+                      >
+                        <DeleteOutlined />
+                      </div>
+                    )}
+                  </div>
+                ),
+                children: (
+                  <div className={eduStyles.inputGroup}>
+                    <div className={eduStyles.inputRow}>
                       <input
                         name="type"
-                        placeholder="Enter Your Education Type"
-                        onChange={(e) =>
-                          handleInputChange(index, "type", e.target.value)
-                        }
-                      />
-                      <input
-                        name="board"
-                        placeholder="Enter Your Education Board"
-                        onChange={(e) =>
-                          handleInputChange(index, "board", e.target.value)
-                        }
-                      />
-                      <input
-                        name="institution"
-                        placeholder="Enter Your Educational Institution Name"
-                        onChange={(e) =>
-                          handleInputChange(index, "institution", e.target.value)
-                        }
-                      />
-                      <input
-                        name="hallticket"
-                        placeholder="Enter Your HallTicket"
-                        onChange={(e) =>
-                          handleInputChange(index, "hallticket", e.target.value)
-                        }
-                      />
-                      <input
-                        name="startDate"
-                        placeholder="Enter Your StartDate"
-                        onChange={(e) =>
-                          handleInputChange(index, "startDate", e.target.value)
-                        }
-                      />
-                      <input
-                        name="endDate"
-                        placeholder="Enter Your EndDate"
-                        onChange={(e) =>
-                          handleInputChange(index, "endDate", e.target.value)
-                        }
-                      />
-                      <input
-                        name="yearOfPass"
-                        placeholder="Enter Your Year Of Pass"
-                        onChange={(e) =>
-                          handleInputChange(index, "yearOfPass", e.target.value)
-                        }
-                      />
-                      <input
-                        name="grade"
-                        placeholder="Enter Your Grade"
-                        onChange={(e) =>
-                          handleInputChange(index, "grade", e.target.value)
-                        }
-                      />
-                      <input
-                        name="city"
-                        placeholder="Enter Your City"
-                        onChange={(e) =>
-                          handleInputChange(index, "city", e.target.value)
-                        }
-                      />
-                      <input
-                        name="stream"
-                        placeholder="Enter Your Stream"
-                        onChange={(e) =>
-                          handleInputChange(index, "stream", e.target.value)
-                        }
-                      />
-                      <textarea
-                        placeholder="Description"
-                        name="description"
-                        onChange={(e) =>
-                          handleInputChange(index, "description", e.target.value)
-                        }
+                        placeholder="Education Type"
+                        value={edu.type}
+                        onChange={(e) => handleInputChange(index, "type", e.target.value)}
                       />
                     </div>
-                  ),
-                },
-              ]}
-            />
-          );
-        })}
+                    <div className={eduStyles.inputRow}>
+                      <input
+                        name="board"
+                        placeholder="Education Board"
+                        value={edu.board}
+                        onChange={(e) => handleInputChange(index, "board", e.target.value)}
+                      />
+                    </div>
+                    <div className={eduStyles.inputRow}>
+                      <input
+                        name="institution"
+                        placeholder="Institution Name"
+                        value={edu.institution}
+                        onChange={(e) => handleInputChange(index, "institution", e.target.value)}
+                      />
+                    </div>
+                    <div className={eduStyles.inputRow}>
+                      <input
+                        name="hallticket"
+                        placeholder="Hall Ticket"
+                        value={edu.hallticket}
+                        onChange={(e) => handleInputChange(index, "hallticket", e.target.value)}
+                      />
+                    </div>
+                    <div className={eduStyles.inputRow}>
+                      <input
+                        name="startDate"
+                        placeholder="Start Date"
+                        value={edu.startDate}
+                        onChange={(e) => handleInputChange(index, "startDate", e.target.value)}
+                      />
+                    </div>
+                    <div className={eduStyles.inputRow}>
+                      <input
+                        name="endDate"
+                        placeholder="End Date"
+                        value={edu.endDate}
+                        onChange={(e) => handleInputChange(index, "endDate", e.target.value)}
+                      />
+                    </div>
+                    <div className={eduStyles.inputRow}>
+                      <input
+                        name="yearOfPass"
+                        placeholder="Year of Passing"
+                        value={edu.yearOfPass}
+                        onChange={(e) => handleInputChange(index, "yearOfPass", e.target.value)}
+                      />
+                    </div>
+                    <div className={eduStyles.inputRow}>
+                      <input
+                        name="grade"
+                        placeholder="Grade"
+                        value={edu.grade}
+                        onChange={(e) => handleInputChange(index, "grade", e.target.value)}
+                      />
+                    </div>
+                    <div className={eduStyles.inputRow}>
+                      <input
+                        name="city"
+                        placeholder="City"
+                        value={edu.city}
+                        onChange={(e) => handleInputChange(index, "city", e.target.value)}
+                      />
+                    </div>
+                    <div className={eduStyles.inputRow}>
+                      <input
+                        name="stream"
+                        placeholder="Stream/Specialization"
+                        value={edu.stream}
+                        onChange={(e) => handleInputChange(index, "stream", e.target.value)}
+                      />
+                    </div>
+                    <div className={eduStyles.inputRow}>
+                      <textarea
+                        name="description"
+                        placeholder="Additional details about your education"
+                        value={edu.description}
+                        onChange={(e) => handleInputChange(index, "description", e.target.value)}
+                      />
+                    </div>
+                  </div>
+                ),
+              },
+            ]}
+          />
+        ))}
 
         <br />
-        <Button
-          onClick={() => {
-            if (educationLevels?.length === EduTitles?.length) {
-              return;
-            }
-            dispatch(
-              addEducationLevel({
-                id: Date.now(),
-                type: "",
-                board: "",
-                institution: "",
-                hallticket: "",
-                startDate: "",
-                endDate: "",
-                yearOfPass: "",
-                grade: "",
-                city: "",
-                stream: "",
-                description: "",
-              })
-            );
-          }}
-        >
-          Add More
-        </Button>
+        {educationLevels.length < EduTitles.length && (
+          <Button onClick={handleAddEducation}>
+            Add More
+          </Button>
+        )}
       </div>
     </div>
   );

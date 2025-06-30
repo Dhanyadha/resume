@@ -8,7 +8,7 @@ const BasicDetailsSlice = createSlice({
       middleName: "",
       lastName: "",
       email: "",
-      phone: 0,
+      phone: "",
       profile: "",
       dob: "",
       proffesionalSummary: "",
@@ -24,3 +24,4 @@ const BasicDetailsSlice = createSlice({
 
 export const { addBasicDetails } = BasicDetailsSlice.actions;
 export default BasicDetailsSlice.reducer;
+

@@ -5,7 +5,7 @@
     font-weight: 700;
   }
 
-  .intBody {
+  .linkBody {
     width: 100%;
     input {
       width: 100%;
@@ -14,17 +14,6 @@
       border-radius: 0.3rem;
       outline: none;
       border: 1px solid #ccc;
-    }
-
-    textarea {
-      padding: 0.5rem;
-      width: 100%;
-      margin: 0.5rem;
-      border-radius: 0.3rem;
-      outline: none;
-      border: 1px solid #ccc;
-      height: 8rem;
-      resize: none;
     }
   }
 

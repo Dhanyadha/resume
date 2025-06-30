@@ -4,10 +4,10 @@ const educationDetailsSlice = createSlice({
   name: "educationDetails",
   initialState: {
     educationLevels: [
-      {
+      {   
         id: Date.now(),
-        type: "",
-        board: "",
+        type: "", 
+        board: "",   
         school: "",
         hallticket: "",
         startDate: "",
@@ -17,25 +17,15 @@ const educationDetailsSlice = createSlice({
         city: "",
         description: "",
         stream: "",
-      },
-    ],
+      }
+    ]
   },
   reducers: {
-    addEducationLevel: (state, action) => {
-      state.educationLevels.push(action.payload);
-    },
-    updateEducationLevel: (state, action) => {
-      const { index, field, value } = action.payload;
-      state.educationLevels[index][field] = value;
-    },
-    removeEducationLevel: (state, action) => {
-      state.educationLevels.splice(action.payload, 1);
-   
-      
-    },
-  },
+    addEducationDetails: (state, action) => {
+      state.educationLevels = action.payload;
+    }
+  }
 });
 
-export const {addEducationLevel,updateEducationLevel,removeEducationLevel,} = educationDetailsSlice.actions;
-
+export const { addEducationDetails } = educationDetailsSlice.actions;
 export default educationDetailsSlice.reducer;

@@ -1,16 +1,16 @@
 import React from "react";
-import intStyles from "../styles/intStyles.module.scss";
+import projStyles from "../styles/projStyles.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { addInternshipDetails } from '../../redux/slices/internshipsDetailsSlice';
+import { addProjectDetails } from '../../redux/slices/projectsDetailsSlice';
 import { DeleteOutlined } from "@ant-design/icons";
 import { Collapse, Button } from "antd";
 
-const InternshipsDetails = () => {
+const ProjectsDetails = () => {
   const dispatch = useDispatch();
-  const internships = useSelector((state) => state.internshipsDetails.internships);
+  const projects = useSelector((state) => state.projectDetails.projects);
 
-  const handleAddInternship = () => {
-    const newInternship = {
+  const handleAddProject = () => {
+    const newProject = {
       id: Date.now(),
       company: "",
       project: "",
@@ -19,41 +19,41 @@ const InternshipsDetails = () => {
       city: "",
       description: ""
     };
-    dispatch(addInternshipDetails([...internships, newInternship]));
+    dispatch(addProjectDetails([...projects, newProject]));
   };
 
-  const handleRemoveInternship = (index) => {
-    if (internships.length === 1) return;
-    const updated = internships.filter((_, i) => i !== index);
-    dispatch(addInternshipDetails(updated));
+  const handleRemoveProject = (index) => {
+    if (projects.length === 1) return;
+    const updated = projects.filter((_, i) => i !== index);
+    dispatch(addProjectDetails(updated));
   };
 
   const handleInputChange = (index, field, value) => {
-    const updated = [...internships];
+    const updated = [...projects];
     updated[index] = { ...updated[index], [field]: value };
-    dispatch(addInternshipDetails(updated));
+    dispatch(addProjectDetails(updated));
   };
 
   return (
-    <div className={intStyles.container}>
-      <div className={intStyles.headerTitle}>Internships</div>
+    <div className={projStyles.container}>
+      <div className={projStyles.headerTitle}>Projects</div>
 
-      <div className={intStyles.internshipBody}>
-        {internships.map((internship, index) => (
+      <div className={projStyles.projectBody}>
+        {projects.map((project, index) => (
           <Collapse
-            key={internship.id}
+            key={project.id}
             collapsible="header"
             items={[
               {
                 key: index,
                 label: (
-                  <div className={intStyles.collapseHead}>
-                    <div>Internship {index + 1}</div>
-                    {index === internships.length - 1 && (
+                  <div className={projStyles.collapseHead}>
+                    <div>Project {index + 1}</div>
+                    {index === projects.length - 1 && (
                       <div
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleRemoveInternship(index);
+                          handleRemoveProject(index);
                         }}
                       >
                         <DeleteOutlined />
@@ -62,51 +62,51 @@ const InternshipsDetails = () => {
                   </div>
                 ),
                 children: (
-                  <div className={intStyles.inputGroup}>
-                    <div className={intStyles.inputRow}>
+                  <div className={projStyles.inputGroup}>
+                    <div className={projStyles.inputRow}>
                       <input
                         name="company"
-                        placeholder="Company Name"
-                        value={internship.company}
+                        placeholder="Company"
+                        value={project.company}
                         onChange={(e) => handleInputChange(index, "company", e.target.value)}
                       />
                     </div>
-                    <div className={intStyles.inputRow}>
+                    <div className={projStyles.inputRow}>
                       <input
                         name="project"
-                        placeholder="Project"
-                        value={internship.project}
+                        placeholder="Project Name"
+                        value={project.project}
                         onChange={(e) => handleInputChange(index, "project", e.target.value)}
                       />
                     </div>
-                    <div className={intStyles.inputRow}>
+                    <div className={projStyles.inputRow}>
                       <input
                         name="startDate"
                         placeholder="Start Date (MM/YYYY)"
-                        value={internship.startDate}
+                        value={project.startDate}
                         onChange={(e) => handleInputChange(index, "startDate", e.target.value)}
                       />
                     </div>
-                    <div className={intStyles.inputRow}>
+                    <div className={projStyles.inputRow}>
                       <input
                         name="endDate"
                         placeholder="End Date (MM/YYYY)"
-                        value={internship.endDate}
+                        value={project.endDate}
                         onChange={(e) => handleInputChange(index, "endDate", e.target.value)}
                       />
                     </div>
-                    <div className={intStyles.inputRow}>
+                    <div className={projStyles.inputRow}>
                       <input
                         name="city"
                         placeholder="City"
-                        value={internship.city}
+                        value={project.city}
                         onChange={(e) => handleInputChange(index, "city", e.target.value)}
                       />
                     </div>
-                    <div className={intStyles.inputRow}>
+                    <div className={projStyles.inputRow}>
                       <textarea
                         placeholder="Description"
-                        value={internship.description}
+                        value={project.description}
                         onChange={(e) => handleInputChange(index, "description", e.target.value)}
                       />
                     </div>
@@ -118,12 +118,12 @@ const InternshipsDetails = () => {
         ))}
 
         <br />
-        <Button onClick={handleAddInternship}>
-          Add Internship
+        <Button onClick={handleAddProject}>
+          Add Project
         </Button>
       </div>
     </div>
   );
 };
 
-export default InternshipsDetails;
+export default ProjectsDetails;

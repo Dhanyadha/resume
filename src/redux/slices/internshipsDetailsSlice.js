@@ -1,36 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  internshipLevels: [
-    {
-      id: Date.now(),
-      company: "",
-      project: "",
-      startDate: "",
-      endDate: "",
-      city: "",
-      description: "",
-    },
-  ],
-};
-
 const internshipsDetailsSlice = createSlice({
-  name: "internshipDetails",
-  initialState,
-  reducers: {
-    addInternshipLevel: (state, action) => {
-      state.internshipLevels = action.payload;
-    },
-    updateInternshipLevel: (state, action) => {
-      const { index, name, value } = action.payload;
-      state.internshipLevels[index][name] = value;
-    },
-    removeInternshipLevel: (state, action) => {
-      state.internshipLevels.splice(action.payload, 1);
-    },
+  name: "internshipsDetails",
+  initialState: {
+    internships: [
+      {
+        id: Date.now(),
+        company: "",
+        project: "",
+        startDate: "",
+        endDate: "",
+        city: "",
+        description: ""
+      }
+    ]
   },
+  reducers: {
+    addInternshipDetails: (state, action) => {
+      state.internships = action.payload;
+    }
+  }
 });
 
-export const { addInternshipLevel, updateInternshipLevel, removeInternshipLevel } = 
-  internshipsDetailsSlice.actions;
+export const { addInternshipDetails } = internshipsDetailsSlice.actions;
 export default internshipsDetailsSlice.reducer;

@@ -9,7 +9,7 @@ const BasicDetails = () => {
   const basicDetails = useSelector((state) => state.basicDetails.basicDetails);
 
   return (
-    <div className={basicDetailsStyles.container}>
+    <div className={basicDetailsStyles.container}>    
       <div className={basicDetailsStyles.headerTitle}>Basic Details</div>
 
       <div className={basicDetailsStyles.basicDetailsBody}>
